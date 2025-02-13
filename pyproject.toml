@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "bertopic-easy"
+version = "0.1.0"
+description = ""
+authors = ["Boris Dev <boris.dev@gmail.com>"]
+readme = "README.md"
+
+
+[tool.poetry.dependencies]
+python = ">=3.12,<3.13"
+numpy = "1.26.4"
+python-dotenv = "^1.0.1"
+loguru = "^0.7.2"
+pydantic = "^2.7.1"
+instructor = "^1.7.0"
+openai = "^1.58.1"
+diskcache = "^5.6.3"
+bertopic = "^0.16.4"
+
+[tool.poetry.dev-dependencies]
+ipdb = "^0.13.13"
+pytest = "^8.2.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
