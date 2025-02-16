@@ -1,6 +1,8 @@
 # BERTopic Easy
 
-## Motivations for polishing BERTopic output using OpenAI's `o3-mini`
+Polishing [BERTopic](https://maartengr.github.io/BERTopic/index.html) output using OpenAI's `o3-mini`.
+
+## Motivations
 
 -   **OpenAI's `o3-mini`** names clusters well.
 -   **OpenAI's `o3-mini`** reduces outliers better than [BERTopic](https://maartengr.github.io/BERTopic/index.html)'s default reducing outliers.
