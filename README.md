@@ -10,7 +10,7 @@ Two intents:
 2. The second intent is to show case a simple, but effective, hybrid approach that
    combines embeddings and LLM completions for topic modeling.
 
-## Anecdotal observation motivating this library
+## Anecdotal observations motivating this library
 
 -   [BERTopic](https://maartengr.github.io/BERTopic/index.html) is one of the
     premier libraries for topic modeling, but its complicated and its default
