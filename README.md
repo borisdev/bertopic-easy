@@ -5,7 +5,7 @@ Polishing [BERTopic](https://maartengr.github.io/BERTopic/index.html) output usi
 ## Motivations
 
 -   **OpenAI's `o3-mini`** names clusters well.
--   **OpenAI's `o3-mini`** reduces outliers better than [BERTopic](https://maartengr.github.io/BERTopic/index.html)'s default reducing outliers.
+-   **OpenAI's `o3-mini`** reduces outliers better than [BERTopic](https://maartengr.github.io/BERTopic/index.html)'s default method.
 
 ## Example usage
 
