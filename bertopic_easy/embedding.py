@@ -3,12 +3,12 @@ Source:
     https://github.com/UKPLab/sentence-transformers/blob/master/examples/applications/clustering/fast_clustering.py
 """
 
-import itertools
 import time
 from dataclasses import dataclass
 from operator import attrgetter
 from typing import Optional, Union
 
+import more_itertools
 import numpy as np
 from diskcache import Cache
 from loguru import logger
@@ -45,7 +45,7 @@ def _embed(
 
     big_list_of_embeddings = []
     batch_size = 100
-    text_batches = list(itertools.batched(clean_sentences, batch_size))
+    text_batches = list(more_itertools.batched(clean_sentences, batch_size))
     for idx, task_batch in enumerate(text_batches):
         try:
             response = openai.embeddings.create(input=task_batch, model=llm_model_name)

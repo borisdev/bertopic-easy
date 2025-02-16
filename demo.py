@@ -1,15 +1,14 @@
 import os
 
 from dotenv import load_dotenv
-from openai import OpenAI
+from openai import AsyncOpenAI, OpenAI
 from rich import print
 
-from bertopic_easy.cluster import cluster
-from bertopic_easy.naming import name
+from bertopic_easy.main import bertopic_easy
 
 load_dotenv()
 
-sentences = [
+texts = [
     "16/8 fasting",
     "16:8 fasting",
     "24-hour fasting",
@@ -39,22 +38,11 @@ sentences = [
     "Avoiding seed oils and processed foods",
 ]
 
-openai = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
-
-clusters = cluster(
-    bertopic_kwargs=dict(min_topic_size=4),
-    docs=sentences,
-    openai=openai,
-    embed_llm_name="text-embedding-3-large",
-    with_disk_cache=True,
-)
-
-
-named_clusters = name(
-    clusters=clusters,
-    openai=openai,
-    llm_model_name="o3-mini",
+clusters = bertopic_easy(
+    texts=texts,
+    openai=OpenAI(api_key=os.environ.get("OPENAI_API_KEY")),
+    async_openai=AsyncOpenAI(api_key=os.environ.get("OPENAI_API_KEY")),
     reasoning_effort="low",
     subject="personal diet intervention outcomes",
 )
-print(named_clusters)
+print(clusters)

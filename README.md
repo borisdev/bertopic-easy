@@ -10,10 +10,16 @@ Polishing [BERTopic](https://maartengr.github.io/BERTopic/index.html) output usi
 ## Example usage
 
 ```python
+
+import os
+
+from dotenv import load_dotenv
+from openai import AsyncOpenAI, OpenAI
+from rich import print
+
 from bertopic_easy.main import bertopic_easy
 
-openai = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
-async_openai = AsyncOpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+load_dotenv()
 
 texts = [
     "16/8 fasting",
@@ -45,15 +51,16 @@ texts = [
     "Avoiding seed oils and processed foods",
 ]
 
-
 clusters = bertopic_easy(
     texts=texts,
-    openai=openai,
-    async_openai=async_openai,
+    openai=OpenAI(api_key=os.environ.get("OPENAI_API_KEY")),
+    async_openai=AsyncOpenAI(api_key=os.environ.get("OPENAI_API_KEY")),
     reasoning_effort="low",
     subject="personal diet intervention outcomes",
 )
 print(clusters)
+
+
 ```
 
 ## Example output
@@ -90,12 +97,13 @@ cluster names from **Step 2**.
 
 ### Install
 
--   `git clone` this repo
--   `cd` to the root of the repo
--   set `OPENAI_API_KEY` as an environment variable or in a `.env` local file
--   `poetry install`
--   `poetry shell` # to activate the virtual environment, if needed
--   `poetry run python demo.py`
+#### Pre-requisites
+
+-   `python = ">=3.11,<3.13"`
+
+```shell
+pip install bertopic-easy
+```
 
 ## Run smoke test
 

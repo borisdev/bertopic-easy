@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 import asyncio
-import itertools
 from abc import ABCMeta, abstractmethod
 from typing import Any, ClassVar, Iterable, Literal, Optional, Type, Union
 
 import instructor
+import more_itertools
 from instructor.exceptions import InstructorRetryException
 from loguru import logger
 from openai import (APIConnectionError, AsyncAzureOpenAI, AsyncOpenAI,
@@ -115,7 +115,7 @@ class Chain(BaseModel, metaclass=ABCMeta):
         responses = []
         batch_size = size
         name = cls.__name__
-        input_objects_batches = list(itertools.batched(input_objects, batch_size))
+        input_objects_batches = list(more_itertools.batched(input_objects, batch_size))
         for idx, input_objects_batch in enumerate(input_objects_batches):
 
             console.print(
