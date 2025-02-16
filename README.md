@@ -2,9 +2,10 @@
 
 ### Quick start
 
--   set `OPENAI_API_KEY` as an environment variable or in a `.env` file
 -   `git clone` this repo
--   `cd` into the repo and run `poetry install`
+-   `cd` to the root of the repo
+-   set `OPENAI_API_KEY` as an environment variable or in a `.env` local file
+-   `poetry install`
 -   `poetry shell` # to activate the virtual environment, if needed
 -   `poetry run python demo.py`
 
