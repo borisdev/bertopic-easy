@@ -10,6 +10,7 @@ from bertopic_easy.classify_outliers import classify_outliers
 from bertopic_easy.cluster import cluster
 from bertopic_easy.embedding import embed
 from bertopic_easy.input_examples import diet_actions
+from bertopic_easy.main import bertopic_easy
 from bertopic_easy.naming import name
 
 load_dotenv()
@@ -79,7 +80,7 @@ def test_clusters():
     if USE_AZURE:
         raise NotImplementedError("Azure OpenAI not implemented")
     else:
-        embedding_client = async_openai
+        embedding_client = openai
         llm_model_name = "text-embedding-3-large"
     clusters = cluster(
         bertopic_kwargs=dict(min_topic_size=4),
@@ -120,3 +121,19 @@ def test_classify_outliers(test_cluster_naming, test_clusters):
         reasoning_effort="low",
     )
     print(merged)
+
+
+def test_bertopic_easy():
+    if USE_AZURE:
+        raise NotImplementedError("Azure OpenAI not implemented")
+    else:
+        openai = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+        async_openai = AsyncOpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+    clusters = bertopic_easy(
+        texts=diet_actions,
+        openai=openai,
+        async_openai=async_openai,
+        reasoning_effort="low",
+        subject="personal diet intervention outcomes",
+    )
+    print(clusters)

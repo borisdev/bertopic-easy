@@ -98,7 +98,7 @@ def classify_outliers(
     size: Union[int, None] = None,
     batch_size: int = 100,
     max_retries: int = 3,
-) -> dict[str, list[LabeledDoc]]:
+) -> Clusters:
     return asyncio.run(
         _classify_outliers(  # type: ignore
             openai=openai,
