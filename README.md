@@ -1,13 +1,5 @@
 # BERTopic Easy
 
-## Intentions
-
-1. The first intent of this library is to give you a shortcut to quickly prototype how
-   your text data can be transformed into topics, before diving into the more
-   powerful, but complex, BERTopic library.
-2. The second intent is to show case a simple, but effective, hybrid approach that
-   combines embeddings and LLM completions for topic modeling.
-
 ## Motivations
 
 -   [BERTopic](https://maartengr.github.io/BERTopic/index.html) is one of the
