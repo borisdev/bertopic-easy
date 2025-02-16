@@ -1,16 +1,9 @@
 # BERTopic Easy
 
-## Motivations
+## Motivations for polishing BERTopic output using OpenAI's `o3-mini`
 
--   [BERTopic](https://maartengr.github.io/BERTopic/index.html) is one of the
-    premier libraries for topic modeling, but its complicated and its default
-    settings for reducing outlier sentences did not work well for me.
--   **OpenAI's `o3-mini`** for outlier classification appears to be better than
-    BERTopic's `reduce_outliers` tool
--   **OpenAI's `o3-mini`** for naming topics is better than GPT4o. GPT4o made near dupe cluster names, where as `o3-mini` made more unique names since it can name wholistically.
--   Fine-tuning an embedding model is expensive and might not be needed with `o1-mini`.
--   Agglomerative clustering gave poor quality results and can't scale, O(n^2).
--   Its uncertain how the prompt approach here can scale. It may require special prompt engineering with chunks. Maybe a crowd-sourced approach to prompt engineering to solve this problem could be a solution.
+-   **OpenAI's `o3-mini`** names clusters well.
+-   **OpenAI's `o3-mini`** reduces outliers better than [BERTopic](https://maartengr.github.io/BERTopic/index.html)'s default reducing outliers.
 
 ## Example usage
 
