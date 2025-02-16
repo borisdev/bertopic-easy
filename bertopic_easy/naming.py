@@ -1,3 +1,4 @@
+from copy import deepcopy
 from typing import Literal, Optional, Union
 
 import instructor
@@ -6,7 +7,7 @@ from openai import AzureOpenAI, OpenAI
 from pydantic import BaseModel
 from rich import print
 
-from bertopic_easy.models import Clusters, LabeledDoc
+from bertopic_easy.models import Clusters
 
 
 def name(
@@ -17,7 +18,7 @@ def name(
     reasoning_effort: Literal["low", "medium", "high"],
     subject: str,  #  = "personal diet intervention outcomes",
     prompt: Optional[str] = None,
-) -> dict[str, list[LabeledDoc]]:
+) -> Clusters:
     if prompt is not None:
         raise NotImplementedError("Prompt is not implemented yet")
     named_clusters = {}
@@ -109,4 +110,6 @@ def name(
     named_clusters = {}
     for number, headline in groups_number2group_headline.items():
         named_clusters[headline] = [member for member in clusters.clusters[number]]
-    return named_clusters
+    results_clusters = deepcopy(clusters)
+    results_clusters.clusters = named_clusters
+    return results_clusters

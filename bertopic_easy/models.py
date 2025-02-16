@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from typing import Optional
+from typing import Optional, Union
 
 from loguru import logger
 from pydantic import BaseModel
@@ -39,7 +39,7 @@ class LabeledDoc(BaseModel):
 
 
 class Clusters(BaseModel):
-    clusters: dict[int, list[LabeledDoc]]
+    clusters: dict[Union[int, str], list[LabeledDoc]]
     bertopic_kwargs: dict
     embedding_llm_name: str
 

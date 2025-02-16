@@ -3,14 +3,14 @@ from __future__ import annotations
 import asyncio
 import itertools
 from abc import ABCMeta, abstractmethod
-from typing import Any, ClassVar, Iterable, Optional, Type, Union
+from typing import Any, ClassVar, Iterable, Literal, Optional, Type, Union
 
 import instructor
 from instructor.exceptions import InstructorRetryException
 from loguru import logger
 from openai import (APIConnectionError, AsyncAzureOpenAI, AsyncOpenAI,
-                    AzureOpenAI, BadRequestError)
-from pydantic import BaseModel, Field, ValidationError
+                    BadRequestError)
+from pydantic import BaseModel, ValidationError
 from rich import print
 from rich.console import Console
 from rich.theme import Theme
@@ -23,6 +23,9 @@ console = Console(theme=custom_theme)
 
 
 class Chain(BaseModel, metaclass=ABCMeta):
+    # concurrent requests to LLM
+    # preprocess the input data
+    # postprocess the output data
 
     input_schema: ClassVar[Type[Any]]
     output_schema: ClassVar[Type[Any]]
@@ -48,29 +51,6 @@ class Chain(BaseModel, metaclass=ABCMeta):
         return prompts
 
     @classmethod
-    def make_client(
-        cls, llm_name: str, timeout: Union[int, None]
-    ) -> Union[AsyncAzureOpenAI, AzureOpenAI]:
-        endpoint = endpoints[llm_name]
-
-        if llm_name == "o3-mini":
-            api_version = "2024-12-01-preview"
-            api_key = "PLACEHOLDER"
-        else:
-            raise ValueError(f"llm_name {llm_name} not implemented")
-
-        deployment_client = instructor.from_openai(
-            AsyncAzureOpenAI(
-                api_version=api_version,
-                azure_endpoint=endpoint,
-                azure_deployment=llm_name,
-                api_key=api_key,
-                timeout=timeout,
-            )
-        )
-        return deployment_client  # type: ignore
-
-    @classmethod
     async def coroutine(
         cls,
         *,
@@ -78,7 +58,6 @@ class Chain(BaseModel, metaclass=ABCMeta):
         llm_name: str,
         prompt: str,
         max_retries: int,
-        max_tokens: int,
         reasoning_effort: Optional[str] = None,
     ) -> Any:
         try:
@@ -93,7 +72,6 @@ class Chain(BaseModel, metaclass=ABCMeta):
                     # max_tokens=max_tokens,
                 )
             else:
-                # o3-mini
                 result = await client.chat.completions.create(  # type: ignore
                     model=llm_name,
                     messages=[
@@ -101,7 +79,6 @@ class Chain(BaseModel, metaclass=ABCMeta):
                     ],
                     response_model=cls.output_schema,
                     max_retries=max_retries,
-                    max_tokens=max_tokens,
                 )
         except InstructorRetryException as e:
             print(prompt)
@@ -126,27 +103,19 @@ class Chain(BaseModel, metaclass=ABCMeta):
     async def batch_predict(
         cls,
         *,
-        max_tokens: int,
+        openai: Union[AsyncOpenAI, AsyncAzureOpenAI],
         size: int,
         llm_name: str,
-        timeout: Union[int, None],
         max_retries: int,
         input_objects: Iterable[Any],
-        reasoning_effort: Optional[str] = None,
+        reasoning_effort: Literal["low", "medium", "high"],
         **kwargs,
     ) -> list[Any]:
+        openai = instructor.patch(openai)
         responses = []
         batch_size = size
         name = cls.__name__
-        try:
-            input_objects_batches = list(itertools.batched(input_objects, batch_size))
-        except Exception as e:
-            print(input_objects)
-            print(batch_size)
-            print(e)
-            breakpoint()
-        # new client for each batch
-        client = cls.make_client(llm_name, sync=False, timeout=timeout)
+        input_objects_batches = list(itertools.batched(input_objects, batch_size))
         for idx, input_objects_batch in enumerate(input_objects_batches):
 
             console.print(
@@ -156,14 +125,13 @@ class Chain(BaseModel, metaclass=ABCMeta):
 
             prompts = cls.make_inputs(input_objects=input_objects_batch, **kwargs)
             tasks = []
+            # o3-mini ONLY for now
             for prompt in prompts:
-                # print(prompt)
                 task = asyncio.create_task(
                     cls.coroutine(
-                        client=client,
+                        client=openai,
                         llm_name=llm_name,
                         prompt=prompt,
-                        max_tokens=max_tokens,
                         max_retries=max_retries,
                         reasoning_effort=reasoning_effort,
                     )
