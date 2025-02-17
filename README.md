@@ -20,6 +20,7 @@ from rich import print
 from bertopic_easy.main import bertopic_easy
 
 load_dotenv()
+openai_api_key = os.environ["OPENAI_API_KEY"]
 
 texts = [
     "16/8 fasting",
@@ -53,8 +54,8 @@ texts = [
 
 clusters = bertopic_easy(
     texts=texts,
-    openai_api_key=os.environ.get("OPENAI_API_KEY"),
-    reasoning_effort="low",
+    openai_api_key=openai_api_key,
+    reasoning_effort="low",  # low, medium, high ... slow to super slow
     subject="personal diet intervention outcomes",
 )
 print(clusters)
