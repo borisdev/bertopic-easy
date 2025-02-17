@@ -19,11 +19,12 @@ async_openai = AsyncOpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 def bertopic_easy(
     *,
     texts: list[str],
-    openai: OpenAI,
-    async_openai: AsyncOpenAI,
+    openai_api_key: str,
     reasoning_effort: Literal["low", "medium", "high"],
-    subject: str
+    subject: str,
 ) -> Clusters:
+    openai = OpenAI(api_key=openai_api_key)
+    async_openai = AsyncOpenAI(api_key=openai_api_key)
     clusters = cluster(
         bertopic_kwargs=dict(min_topic_size=4),
         docs=texts,

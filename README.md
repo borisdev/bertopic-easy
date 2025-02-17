@@ -53,8 +53,7 @@ texts = [
 
 clusters = bertopic_easy(
     texts=texts,
-    openai=OpenAI(api_key=os.environ.get("OPENAI_API_KEY")),
-    async_openai=AsyncOpenAI(api_key=os.environ.get("OPENAI_API_KEY")),
+    openai_api_key=os.environ.get("OPENAI_API_KEY"),
     reasoning_effort="low",
     subject="personal diet intervention outcomes",
 )
