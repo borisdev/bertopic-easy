@@ -105,9 +105,13 @@ cluster names from **Step 2**.
 pip install bertopic-easy
 ```
 
-## Run smoke test
+## Pointers for contributing developer
+
+Run a smoke test
 
 ```shell
 
 poetry run pytest tests/test_main.py::test_bertopic_easy
 ```
+
+-   make a tiny PR so I can see how I can help you get started
