@@ -2,6 +2,7 @@ import os
 from typing import Literal
 
 from dotenv import load_dotenv
+from loguru import logger
 from openai import AsyncOpenAI, OpenAI
 from rich import print
 
@@ -39,11 +40,15 @@ def bertopic_easy(
         reasoning_effort="low",
         subject=subject,
     )
-    merged = classify_outliers(
-        named_clusters=named_clusters,
-        outliers=clusters.clusters[-1],
-        openai=async_openai,
-        llm_name="o3-mini",  # ONLY THIS LLM ALLOWED for now
-        reasoning_effort=reasoning_effort,
-    )
+    try:
+        merged = classify_outliers(
+            named_clusters=named_clusters,
+            outliers=clusters.clusters[-1],
+            openai=async_openai,
+            llm_name="o3-mini",  # ONLY THIS LLM ALLOWED for now
+            reasoning_effort=reasoning_effort,
+        )
+    except KeyError:
+        logger.debug("No outliers found")
+        return named_clusters
     return merged
