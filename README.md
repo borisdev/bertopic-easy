@@ -14,10 +14,9 @@ Polishing [BERTopic](https://maartengr.github.io/BERTopic/index.html) output usi
 import os
 
 from dotenv import load_dotenv
-from openai import AsyncOpenAI, OpenAI
 from rich import print
 
-from bertopic_easy.main import bertopic_easy
+from bertopic_easy import bertopic_easy
 
 load_dotenv()
 openai_api_key = os.environ["OPENAI_API_KEY"]
@@ -55,7 +54,7 @@ texts = [
 clusters = bertopic_easy(
     texts=texts,
     openai_api_key=openai_api_key,
-    reasoning_effort="low",  # low, medium, high ... slow to super slow
+    reasoning_effort="low",  # low, medium, high ... slow, slower, slowest
     subject="personal diet intervention outcomes",
 )
 print(clusters)
@@ -104,6 +103,10 @@ cluster names from **Step 2**.
 ```shell
 pip install bertopic-easy
 ```
+
+## Some BERTopic FAQs
+
+[Why does it take so long to import BERTopic?](https://maartengr.github.io/BERTopic/faq.html#how-can-i-use-bertopic-with-chinese-documents)
 
 ## Pointers for contributing developer
 

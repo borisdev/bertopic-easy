@@ -6,11 +6,11 @@ from dotenv import load_dotenv
 from openai import AsyncOpenAI, OpenAI
 from rich import print
 
+from bertopic_easy import bertopic_easy
 from bertopic_easy.classify_outliers import classify_outliers
 from bertopic_easy.cluster import cluster
 from bertopic_easy.embedding import embed
 from bertopic_easy.input_examples import diet_actions
-from bertopic_easy.main import bertopic_easy
 from bertopic_easy.naming import name
 
 load_dotenv()
@@ -127,12 +127,10 @@ def test_bertopic_easy():
     if USE_AZURE:
         raise NotImplementedError("Azure OpenAI not implemented")
     else:
-        openai = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
-        async_openai = AsyncOpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+        openai_api_key = os.environ["OPENAI_API_KEY"]
     clusters = bertopic_easy(
         texts=diet_actions,
-        openai=openai,
-        async_openai=async_openai,
+        openai_api_key=openai_api_key,
         reasoning_effort="low",
         subject="personal diet intervention outcomes",
     )

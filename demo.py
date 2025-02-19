@@ -1,10 +1,9 @@
 import os
 
 from dotenv import load_dotenv
-from openai import AsyncOpenAI, OpenAI
 from rich import print
 
-from bertopic_easy.main import bertopic_easy
+from bertopic_easy import bertopic_easy
 
 load_dotenv()
 

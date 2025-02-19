@@ -6,6 +6,11 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Literal, Optional, Union
 
+from loguru import logger
+
+logger.debug(
+    "Importing BERTopic takes a while... see the BERTopic library's FAQ for more info"
+)
 from bertopic import BERTopic
 from loguru import logger
 from openai import AsyncAzureOpenAI, AzureOpenAI
