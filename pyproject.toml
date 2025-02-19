@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "bertopic-easy"
-version = "0.1.0"
+version = "0.3.0"
 description = ""
 authors = ["Boris Dev <boris.dev@gmail.com>"]
 readme = "README.md"
