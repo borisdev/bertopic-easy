@@ -1,6 +1,8 @@
 # BERTopic Easy
 
-Polishing [BERTopic](https://maartengr.github.io/BERTopic/index.html) output using OpenAI's `o3-mini`.
+Here is a quick way to cluster documents into topics that leverages OpenAI's
+cutting edge o3-mini LLM model to polish the embedding results of
+[BERTopic](https://maartengr.github.io/BERTopic/index.html).
 
 ## Motivations
 
