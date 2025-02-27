@@ -115,8 +115,12 @@ pip install bertopic-easy
 Run a smoke test
 
 ```shell
-
+git clone git@github.com:borisdev/bertopic-easy.git
+cd bertopic-easy
+pip install -e . # editable install or poetry install -e .
+# set the OPENAI_API_KEY in the code or as an environment variable
 poetry run pytest tests/test_main.py::test_bertopic_easy
+# remember it takes a while to import the bertopic library
 ```
 
 -   make a tiny PR so I can see how I can help you get started
