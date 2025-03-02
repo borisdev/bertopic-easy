@@ -206,5 +206,41 @@ def test_bertopic_easy():
     )
     print(clusters)
 
+
 def test_bertopic_easy_azure():
-    # claude complete this test function based on the `bertopic_easy_azure` function in the code in the main.py file
+    # Create Azure OpenAI configs for each component
+    embedding_config = AzureOpenAIConfig(
+        api_version=azure_openai_config.api_version,
+        azure_endpoint=azure_openai_config.azure_endpoint,
+        azure_deployment="text-embedding-3-large",
+        api_key=azure_openai_config.api_key,
+        timeout=azure_openai_config.timeout,
+    )
+
+    naming_config = AzureOpenAIConfig(
+        api_version="2024-12-01-preview",
+        azure_endpoint="https://boris-m3ndov9n-eastus2.openai.azure.com/",
+        azure_deployment="o3-mini",
+        api_key=azure_openai_config.api_key,
+        timeout=60,
+    )
+
+    classifier_config = AzureOpenAIConfig(
+        api_version="2024-12-01-preview",
+        azure_endpoint="https://boris-m3ndov9n-eastus2.openai.azure.com/",
+        azure_deployment="o3-mini",
+        api_key=azure_openai_config.api_key,
+        timeout=60,
+    )
+
+    # Run the bertopic_easy_azure function
+    clusters = bertopic_easy_azure(
+        texts=diet_actions,
+        reasoning_effort="low",
+        subject="personal diet intervention outcomes",
+        azure_embeder_config=embedding_config,
+        azure_namer_config=naming_config,
+        azure_classifier_config=classifier_config,
+    )
+
+    print(clusters)
