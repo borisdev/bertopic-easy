@@ -13,7 +13,7 @@ logger.debug(
 )
 from bertopic import BERTopic
 from loguru import logger
-from openai import AsyncAzureOpenAI, AzureOpenAI
+from openai import AzureOpenAI, OpenAI
 from pydantic import BaseModel, Field
 from rich import print
 from rich.console import Console
