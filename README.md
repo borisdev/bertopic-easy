@@ -14,8 +14,11 @@ along with OPENAI's `o3-mini` LLM model to name the clusters and classify outlie
 
 ## Motivations
 
--   **OpenAI's `o3-mini`** names clusters well.
--   **OpenAI's `o3-mini`** reduces outliers better than [BERTopic](https://maartengr.github.io/BERTopic/index.html)'s default method.
+-   Topic modeling is a time-consuming development task. I did not find any
+    tools to help me quickly make quality topics for my prototype. BERTopic
+    library is a great tool, but it is not easy to use with complicated
+    options.
+-   **OpenAI's cutting-edge `o3-mini`** names clusters well, and reduces outliers better than [BERTopic](https://maartengr.github.io/BERTopic/index.html)'s default method.
 
 ## Example usage
 
