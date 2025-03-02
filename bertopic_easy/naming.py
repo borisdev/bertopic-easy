@@ -17,7 +17,7 @@ def name(
     llm_model_name: str,
     reasoning_effort: Literal["low", "medium", "high"],
     subject: str,  #  = "personal diet intervention outcomes",
-    prompt: Optional[str] = None,
+    prompt: Optional[str] = None,  # todo help downstream evaluation
 ) -> Clusters:
     if prompt is not None:
         raise NotImplementedError("Prompt is not implemented yet")

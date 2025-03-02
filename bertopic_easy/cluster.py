@@ -34,6 +34,9 @@ def cluster(
     embed_llm_name: str,
     with_disk_cache: bool,
 ) -> Clusters:
+    if len(docs) < 4:
+        print(docs)
+        raise ValueError("Need at least 4 texts to cluster")
     topic_model = BERTopic(**bertopic_kwargs)
     embeddings = embed(
         texts=docs,
@@ -56,4 +59,12 @@ def cluster(
         bertopic_kwargs=bertopic_kwargs,
         embedding_llm_name=embed_llm_name,
     )
+    print(clusters)
+    if clusters.clusters is None or len(clusters.clusters) == 0:
+        raise ValueError("No clusters found")
+    if len(clusters.clusters) == 1:
+        if -1 in clusters.clusters:
+            logger.warning(
+                f"All {len(docs)} documents were assigned to the outlier cluster"
+            )
     return clusters

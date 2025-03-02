@@ -1,8 +1,16 @@
 # BERTopic Easy
 
-Here is a quick way to cluster documents into topics that leverages OpenAI's
-cutting edge o3-mini LLM model to polish the embedding results of
-[BERTopic](https://maartengr.github.io/BERTopic/index.html).
+The purpose of this library is to reduce development time
+needed to cluster documents into topics.
+
+> [!CAUTION]
+> This library is in early development. It is not ready for production use.
+
+The library has been tested on 2,500 sentences. A smell test of 10,000 sentences
+seems to pass, but of of course, the topic quality will be unknown, so be cautious and evaluate carefully.
+
+The approach here is to use DBSAN clustering algorithm from [BERTopic](https://maartengr.github.io/BERTopic/index.html)
+along with OPENAI's `o3-mini` LLM model to name the clusters and classify outliers.
 
 ## Motivations
 

@@ -20,7 +20,7 @@ class AzureOpenAIConfig(BaseModel):
     azure_endpoint: str
     azure_deployment: str
     api_key: str
-    timeout: int
+    timeout: Optional[int] = None
 
     def to_json(self):
         """Developer helper tool to create a JSON file for manually adding to your local .env"""

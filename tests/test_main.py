@@ -2,10 +2,6 @@ import json
 import os
 
 import pytest
-from dotenv import load_dotenv
-from openai import AsyncAzureOpenAI, AsyncOpenAI, AzureOpenAI, OpenAI
-from rich import print
-
 from bertopic_easy import bertopic_easy
 from bertopic_easy.classify_outliers import classify_outliers
 from bertopic_easy.cluster import cluster
@@ -14,6 +10,9 @@ from bertopic_easy.input_examples import diet_actions
 from bertopic_easy.main import bertopic_easy_azure
 from bertopic_easy.models import AzureOpenAIConfig
 from bertopic_easy.naming import name
+from dotenv import load_dotenv
+from openai import AsyncAzureOpenAI, AsyncOpenAI, AzureOpenAI, OpenAI
+from rich import print
 
 load_dotenv()
 openai = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
@@ -26,10 +25,9 @@ class AzureOpenAIConfig(BaseModel):
     api_key: str
     timeout: int
 """
+from bertopic_easy.models import AzureOpenAIConfig
 ## AZURE OPENAI CONFIG ##
 from openai import AzureOpenAI
-
-from bertopic_easy.models import AzureOpenAIConfig
 
 # Below needs to be refactored in the future so we can remove hardcoded values
 azure_openai_json = os.environ.get("text-embedding-3-large")

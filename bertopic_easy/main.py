@@ -1,16 +1,15 @@
 import os
 from typing import Literal
 
-from dotenv import load_dotenv
-from loguru import logger
-from openai import AsyncAzureOpenAI, AsyncOpenAI, AzureOpenAI, OpenAI
-from rich import print
-
 from bertopic_easy.classify_outliers import classify_outliers
 from bertopic_easy.cluster import cluster
 from bertopic_easy.input_examples import diet_actions
 from bertopic_easy.models import AzureOpenAIConfig, Clusters
 from bertopic_easy.naming import name
+from dotenv import load_dotenv
+from loguru import logger
+from openai import AsyncAzureOpenAI, AsyncOpenAI, AzureOpenAI, OpenAI
+from rich import print
 
 load_dotenv()
 openai = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
@@ -24,6 +23,8 @@ def bertopic_easy(
     reasoning_effort: Literal["low", "medium", "high"],
     subject: str,
 ) -> Clusters:
+    if len(texts) < 4:
+        raise ValueError("Need at least 4 texts to cluster")
     openai = OpenAI(api_key=openai_api_key)
     async_openai = AsyncOpenAI(api_key=openai_api_key)
     clusters = cluster(
@@ -63,6 +64,8 @@ def bertopic_easy_azure(
     azure_namer_config: AzureOpenAIConfig,
     azure_classifier_config: AzureOpenAIConfig,
 ) -> Clusters:
+    if len(texts) < 4:
+        raise ValueError("Need at least 4 texts to cluster")
     clusters = cluster(
         bertopic_kwargs=dict(min_topic_size=4),
         docs=texts,

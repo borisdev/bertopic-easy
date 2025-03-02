@@ -99,6 +99,13 @@ def classify_outliers(
     batch_size: int = 100,
     max_retries: int = 3,
 ) -> Clusters:
+    if outliers is None or len(outliers) == 0:
+        logger.warning("No outliers to classify")
+        return named_clusters
+    labels = list(named_clusters.clusters.keys())
+    if len(labels) == 0:
+        logger.warning("No topics (cluster names) to classify outliers against")
+        return named_clusters
     return asyncio.run(
         _classify_outliers(  # type: ignore
             openai=openai,
