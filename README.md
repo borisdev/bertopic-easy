@@ -1,7 +1,7 @@
 # BERTopic Easy
 
 The purpose of this library is to reduce development time
-needed to cluster documents into topics.
+needed to cluster documents into topics, at least for your prototype.
 
 > [!CAUTION]
 > This library is in early development. It is not ready for production use.
